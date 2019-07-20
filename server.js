@@ -30,14 +30,14 @@ mongoose.connect(dbConfig.url, {
 
 // define a simple route
 app.get('/', (req, res) => {
-    res.json({"message": "Welcome to EasyNotes application. Take notes quickly. Organize and keep track of all your notes."});
+    res.json({"message": "RESTful API for text prediction using LSTM recurrent neural network"});
 });
 
 // Require Notes routes
 require('./app/routes/note.routes.js')(app);
 
 // listen for requests
-//app.listen(3000, () => {
+//for localhost uncomment this and comment below line|| app.listen(3000, () => {
 app.listen(process.env.PORT || 3000, () => {
     console.log("Server is listening on port 3000");
 });
