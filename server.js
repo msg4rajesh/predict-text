@@ -47,7 +47,7 @@ app.listen(process.env.PORT || 3000, () => {
 
 //BrainJS thing wth sheduler
 const net = new brain.recurrent.LSTM();
-var j = schedule.scheduleJob('48 * * * *', function(){
+var j = schedule.scheduleJob('*/10 * * * *', function(){
     console.log('SHEDULED TASK: Train Model Executing.....');
 
     //retrive data from Daatabase
