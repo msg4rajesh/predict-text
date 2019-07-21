@@ -45,11 +45,12 @@ app.listen(process.env.PORT || 3000, () => {
 //BrainJS thing
 const net = new brain.recurrent.LSTM();
 
-// net.train([
-//   'doe, a deer, a female deer',
-//   'ray, a drop of golden sun',
-//   'me, a name I call myself',
-// ]);
-
+net.train([
+  'doe, a deer, a female deer',
+  'ray, a drop of golden sun',
+  'me, a name I call myself',
+]);
+exports.net =net;
+exports.brain =  brain;
 // const output = net.run('doe');  // ', a deer, a female deer'
 // console.log(output);

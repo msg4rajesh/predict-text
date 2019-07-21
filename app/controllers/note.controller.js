@@ -1,6 +1,7 @@
 const Note = require('../models/note.model.js');
-var brain = require('brain.js');
-const net = new brain.recurrent.LSTM();
+var serverVariables = require('../../server.js');
+//var brain = require('brain.js');
+//const net = new brain.recurrent.LSTM();
 
 
 
@@ -132,7 +133,7 @@ exports.trainModel = (req, res) => {
     //     logPeriod: 5,
     //     learningRate: 0.1,
     //   };
-    net.train([
+    serverVariables.net.train([
       'doe, a deer, a female deer',
       'ray, a drop of golden sun',
       'me, a name I call myself',
@@ -147,7 +148,7 @@ exports.trainModel = (req, res) => {
 
 // LSTM
 exports.predit = (req, res) => {    
-    const output = net.run(req.params.text);  // ', a deer, a female deer'
+    const output = serverVariables.net.run(req.params.text);  // ', a deer, a female deer'
     console.log(output);
     res.send({message: output});
 };
