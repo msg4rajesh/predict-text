@@ -55,7 +55,7 @@ exports.trainModel = (req, res) => {
 
 
 // LSTM
-exports.predit = (req, res) => {    
+exports.predict = (req, res) => {    
     const output = serverVariables.net.run(req.params.text);  // ', a deer, a female deer'
     console.log(output);
     res.send({message: output});

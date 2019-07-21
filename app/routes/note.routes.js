@@ -6,6 +6,6 @@ module.exports = (app) => {
 
     //BrainJS thing
     app.get('/trainModel', notes.trainModel);
-    app.get('/predit/:text', notes.predict);
+    app.get('/predict/:text', notes.predict);
 
 }
