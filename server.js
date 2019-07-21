@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 //brainJS thing
 var brain = require('brain.js');
 var schedule = require('node-schedule');
+const Note = require('./app/models/note.model.js');
 
 
 // create express app
@@ -32,7 +33,7 @@ mongoose.connect(dbConfig.url, {
 
 // define a simple route
 app.get('/', (req, res) => {
-    res.json({"message": "RESTful API for text prediction using LSTM recurrent neural network"});
+    res.json({"message": "RESTful API for text prediction using LSTM recurrent neural network. The model is sheduled to start training at 01th minuete of every hour. The training will take 2-3 minutes"});
 });
 
 // Require Notes routes
@@ -46,16 +47,35 @@ app.listen(process.env.PORT || 3000, () => {
 
 //BrainJS thing wth sheduler
 const net = new brain.recurrent.LSTM();
-var j = schedule.scheduleJob('41 * * * *', function(){
+var j = schedule.scheduleJob('35 * * * *', function(){
     console.log('SHEDULED TASK: Train Model Executing.....');
-    net.train([
-        'doe, a deer, a female deer',
-        'ray, a drop of golden sun',
-        'me, a name I call myself',
-      ]);
-      exports.net =net;
-      exports.brain =  brain; 
-      console.log('SHEDULED TASK: Train Model Completed');
+
+    //retrive data from Daatabase
+    var resArray=[];
+    Note.find()
+    .then(notes => {
+        console.log(notes);
+        notes.forEach(function(item) {
+            //etc
+            console.log(item.text);
+            resArray.push(item.text.toString());
+          });
+          net.train(resArray);
+          console.log('SHEDULED TASK: Train Model Completed');
+          //console.log(resArray);
+    }).catch(err => {
+        res.status(500).send({
+            message: err.message || "Some error occurred while retrieving notes."
+        });
+    });
+    // net.train([
+    //     'doe, a deer, a female deer',
+    //     'ray, a drop of golden sun',
+    //     'me, a name I call myself',
+    //   ]);
+    exports.net =net;
+    exports.brain =  brain; 
+    
 });
 // const output = net.run('doe');  // ', a deer, a female deer'
 // console.log(output);
